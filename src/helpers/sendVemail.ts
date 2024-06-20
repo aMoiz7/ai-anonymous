@@ -1,6 +1,6 @@
 import { resend } from "@/lib/resend";
 import { Apires } from "@/types/Apires";
-import { EmailTemplate } from './../../emails/Vemail';
+import VerificationEmail from "../../emails/Vemail";
 
 export async function sendVerificationEmail
 (
@@ -9,12 +9,12 @@ export async function sendVerificationEmail
     verifyCode: string
 ):Promise<Apires>{
  try {
-   
+     //@ts-ignore
     await resend.emails.send({
-        from: 'Acme <onboarding@resend.dev>',
+        from: 'onboarding@resend.dev',
         to: email,
         subject: ' Mystry message',
-        react: EmailTemplate({firstName:username}),
+        react: VerificationEmail({ username  ,otp : verifyCode }),
       });
     
     return{success:true , message:"email send "} 
