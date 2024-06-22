@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GoogleGenerativeAIStream, StreamingTextResponse } from 'ai';
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || 'AIzaSyCw-FjcQULMtEwmYlScvz9BO78y1jCju_w');
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || '');
 
 export async function POST(req: Request) {
   // Extract the `prompt` from the body of the request
