@@ -1,6 +1,7 @@
 import {z} from 'zod'
 
 export const signinSchema = z.object({
-    code : z.string().length(6)
+    identifier : z.string(),
+    password : z.string()
 })
 

@@ -7,7 +7,7 @@ const UsernameQueryschmea = z.object({
   username: userNameValidation,
 });
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   await dbconnect();
   try {
     const { searchParams } = new URL(request.url);
@@ -48,7 +48,7 @@ export async function GET(request: Request) {
    
    return Response.json({
     success:true,
-    message:" username is avilable"
+    message:"username is unique"
 },{
     status:200
 })
