@@ -35,7 +35,7 @@ type  MessageCard={
     onMessageDelete:(messageId:string)=>void
 }
   
-const messageCard = ({id,message ,date , onMessageDelete}:MessageCard) => {
+const MessageCard = ({id,message ,date , onMessageDelete}:MessageCard) => {
 
     const {toast} =useToast()
 
@@ -83,4 +83,4 @@ const messageCard = ({id,message ,date , onMessageDelete}:MessageCard) => {
   );
 };
 
-export default messageCard;
+export default MessageCard;

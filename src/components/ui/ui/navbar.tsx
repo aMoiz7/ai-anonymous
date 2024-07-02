@@ -6,7 +6,7 @@ import {User} from 'next-auth'
 import { Button } from '@/components/ui/button';
 
 
-const navbar = () => {
+const Navbar = () => {
 
     const {data:session} = useSession()
     const user:User = session?.user as User
@@ -34,4 +34,4 @@ const navbar = () => {
   )
 }
 
-export default navbar
+export default Navbar

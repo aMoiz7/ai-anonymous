@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useCompletion } from 'ai/react'
 
 
-const page = () => {
+const User = () => {
   const param = useParams();
   const username = param.username;
 
@@ -159,4 +159,4 @@ const parseStringMessages = (messageString: string): string[] => {
   );
 };
 
-export default page;
+export default User;
