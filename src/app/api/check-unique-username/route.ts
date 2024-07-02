@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
       
     const {username} = result.data
-    
+    //@ts-ignore
    const existingVUser =  await UserModel.findOne({username , isVerified:true})
 
    if(existingVUser){

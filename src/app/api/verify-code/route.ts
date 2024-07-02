@@ -11,6 +11,7 @@ export async  function POST(req : Request){
     
    const {username , code} = await req.json()
    const decodedusername =  decodeURIComponent(username)
+   //@ts-ignore
    const user = await UserModel.findOne({username:decodedusername})
 
 

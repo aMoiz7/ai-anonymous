@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
         if (!username || !email || !password) {
             return NextResponse.json({ success: false, message: "All fields are required" }, { status: 400 });
         }
-
+//@ts-ignore
         const existingUserwithVerifiedByUsername = await UserModel.findOne({
             username,
             isVerified: true
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
         if (existingUserwithVerifiedByUsername) {
             return NextResponse.json({ success: false, message: "Username is already taken" }, { status: 400 });
         }
-
+//@ts-ignore
         const existingUserByEmail = await UserModel.findOne({ email });
 
         const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();

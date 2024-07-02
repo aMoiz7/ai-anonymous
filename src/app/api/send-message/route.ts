@@ -10,6 +10,7 @@ export async function POST(req:Request) {
    
 
    try {
+    //@ts-ignore
     const user = await UserModel.findOne({username})
     console.log(user , "message")
 
