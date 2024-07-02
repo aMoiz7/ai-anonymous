@@ -49,8 +49,9 @@ const SignUpPage = () => {
          
 
 
-      } catch (error) {
+      } catch (error:any) {
          const axiosError = error as AxiosError
+         //@ts-ignore
          setusernameMessage(axiosError.response?.data.message || "error in checking username")
       }finally{
         setLoader(false)

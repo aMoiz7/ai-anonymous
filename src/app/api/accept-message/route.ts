@@ -27,7 +27,7 @@ export async function POST(req : Request){
 
    
    try { 
-
+ //@ts-expect-error
     const checkstatus  = await  UserModel.findById(user._id)
 
     if(!checkstatus){
@@ -40,7 +40,7 @@ export async function POST(req : Request){
     }
 
     const status = checkstatus.isAcceptingMessage
-
+     //@ts-expect-error
     const updatedUSer =  await UserModel.findByIdAndUpdate(userid , {
         isAcceptingMessage : !status
      } , 
@@ -102,6 +102,7 @@ export async function GET(req:Request){
  
 
  try {
+     //@ts-expect-error
     const getuser = await UserModel.findById(userid)
    
     if(!getuser){

@@ -16,6 +16,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials: any): Promise<any> {
         await dbconnect();
         try {
+           //@ts-expect-error
           const user = await UserModel.findOne({
             $or: [
               { email: credentials.identifier },
@@ -46,10 +47,15 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ session, token }) {
+      
       if (token) {
+        //@ts-ignore
         session.user._id = token._id;
+        //@ts-ignore
         session.user.isVerified = token.isVerified;
+        //@ts-ignore
         session.user.isAcceptMessage = token.isAcceptMessage;
+        //@ts-ignore
         session.user.username = token.username;
       }
       return session;

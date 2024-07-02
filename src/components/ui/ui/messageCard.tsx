@@ -30,7 +30,7 @@ import { Apires } from "@/types/Apires";
 
 type  MessageCard={
      id:string,
-     date:date
+     date:Date
     message: string;
     onMessageDelete:(messageId:string)=>void
 }
