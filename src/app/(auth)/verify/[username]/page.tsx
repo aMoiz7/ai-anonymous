@@ -11,7 +11,7 @@ import axios from 'axios';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-const page = () => {
+const Page = () => {
     const router = useRouter()
     const params = useParams()
     const {toast} = useToast()
@@ -77,4 +77,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

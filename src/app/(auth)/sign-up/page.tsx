@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
 import { useRouter } from 'next/navigation';
 
-const page = () => {
+const SignUpPage = () => {
 
   const [username , setusername] = useState('')
   const [usernameMessage , setusernameMessage] = useState('')
@@ -164,4 +164,4 @@ const page = () => {
   )
 }
 
-export default page
+export default SignUpPage

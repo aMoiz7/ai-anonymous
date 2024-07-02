@@ -16,7 +16,7 @@ import MessageCard from './../../../components/ui/ui/messageCard';
 import { Switch } from '@/components/ui/switch';
 
 
-const page = () => {
+const Page = () => {
 
   const [message , setMessage] = useState([]);
   const [isLoading , setIsloading] = useState(false);
@@ -205,4 +205,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
