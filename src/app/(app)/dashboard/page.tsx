@@ -62,7 +62,7 @@ const Dashboard = () => {
       SetIsswitchLoading(false);
       try {
         const response = await axios.get<Apires>('/api/get-messages');
-       
+        //@ts-ignore
         setMessage(response.data.message || []);
         if (refresh) {
           toast({
