@@ -7,6 +7,7 @@ import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
 import { GemIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton"
+import { useCompletion } from 'ai/react'
 
 
 const page = () => {
@@ -15,13 +16,11 @@ const page = () => {
 
   const [message, setMessage] = useState("");
 
-  const [aiSuggestions, setAiSuggestions] = useState([]);
-  const [AiLoader , setAiLoader]  =useState(false)
   const [acceptMsg , setacceptMsg] = useState(true) 
   
    
 
-  console.log(process.env.DB_PASS , "new");
+ 
   
 
   const { toast } = useToast();
@@ -64,38 +63,31 @@ const page = () => {
     
   };
 
+
+  const specialChar = '||';
+
+const parseStringMessages = (messageString: string): string[] => {
+  return messageString.split(specialChar);
+};
    
-  
-  
+  const {completion , complete , error , isLoading}= useCompletion({
+    api:"/api/suggest-message",
+    
+  })
 
-   const Aihandler = async()=>{
-     try {
-      setAiLoader(true)
-       const res = await axios.post('/api/suggest-message')
-       if (!res.data) {
-        toast({
-          title: "failed",
-          description: " Downtime ",
-          variant: "destructive",
-        });
-      }
-       
-      const data = res.data.split('||')
-      const dataedit = data.map(question => question.replace(/0:"\s?|"\s?$/, '').trim());
-      
-      setAiSuggestions(dataedit)
-      setAiLoader(false)
 
-     } catch (error:any) {
-      setAiLoader(false)
-      console.error(error)
-      toast({
-        title: "failed",
-        description: error,
-        variant: "destructive",
-      });
-     }
-   }
+
+  
+  const Aihandler = async () => {
+    try {
+      complete('');
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      // Handle error appropriately
+    }
+  };
+
+
 
    useEffect(() => {
     checkUserAcceptingmsg()
@@ -150,9 +142,9 @@ const page = () => {
         h-44 ">
         
         {
-          AiLoader?<Skeleton className=" ml-8 w-2/3 h-24 mt-6  rounded-m" />
+          isLoading?<Skeleton className=" ml-8 w-2/3 h-24 mt-6  rounded-m" />
           :
-        aiSuggestions.map((question, index)=>(
+          parseStringMessages(completion).map((question, index)=>(
           <button className="border-2 rounded-m mt-4 ml-12 before:m-2 w-11/12" onClick={() => handleClick(question)} >
            {question}
           </button>
