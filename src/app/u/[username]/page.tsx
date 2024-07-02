@@ -138,11 +138,11 @@ const parseStringMessages = (messageString: string): string[] => {
         <span className="text-s">
           click on any message bellow to select it.
         </span>
-        <div className="  border-gray-300 rounded-lg border-4 
-        h-44 md:border-0 sm:border-0 flex flex-wrap">
+        <div className="   rounded-lg border-0
+        h-44  ">
         
         {
-          isLoading?<Skeleton className=" ml-8 w-2/3 h-24 mt-6  rounded-m" />
+          isLoading?<Skeleton className=" ml-8 w-2/3  mt-6  rounded-m" />
           :
           parseStringMessages(completion).map((question ,i)=>(
           <button className="border-2 rounded-m mt-4 ml-12  w-11/12   " key={i} onClick={() => handleClick(question)} >
