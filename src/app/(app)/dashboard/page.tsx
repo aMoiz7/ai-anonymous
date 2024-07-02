@@ -27,6 +27,7 @@ const Dashboard = () => {
   const {toast} = useToast();
 
   const handleDelete = async(messageId :string)=>{
+    //@ts-ignore
         setMessage(message.filter((message)=> message._id!==messageId))
   }
 
