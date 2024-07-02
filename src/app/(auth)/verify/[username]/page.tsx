@@ -29,7 +29,7 @@ const page = () => {
                 toast({
                     title:"success",
                     description:res.data.message,
-                    variant:'destructive'
+                    variant:'default'
                 })
 
                 router.replace('/sign-in')

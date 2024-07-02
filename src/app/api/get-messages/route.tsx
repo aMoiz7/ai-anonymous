@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/app/auth/[...nextauth]/options";
+import { authOptions } from "../auth/[...nextauth]/options";
 
 import { dbconnect } from "@/lib/dbConnect";
 import { UserModel } from "@/models/User";
@@ -25,19 +25,23 @@ export async function GET(req:Request){
 
 
     const userid = new mongoose.Types.ObjectId(user._id);
+    console.log(userid, "userid , get messages")
 
     try {
-         const user = await UserModel.aggregate([
-                     {$match:{id:userid}} , {$unwind :"$messages"} , {$sort :{'messages.createdAt' :-1}}
-                     ,{$group:{_id:'$_id' , messages:{$push:'$messages'}}}
-         ]
-    )
-
+        const user = await UserModel.aggregate([
+            { $match: { _id:userid } },
+            { $unwind: "$message" },
+            { $sort: { 'message.createdAt': -1 } },
+            { $group: { _id: '$_id', message: { $push: '$message' } } }
+        ]);
+        
+        console.log(user, "user");
+        
          
        if(!user || user.length === 0){
         return Response.json({
             success:false,
-            message : "use not found "
+            message : "user not found "
            },{
             status:401
            })
@@ -45,7 +49,7 @@ export async function GET(req:Request){
 
        return Response.json({
         success:true,
-        message : user[0].messages 
+        message : user[0].message
        },{
         status:200
        })

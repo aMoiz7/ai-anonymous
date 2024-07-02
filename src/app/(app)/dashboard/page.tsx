@@ -1,3 +1,4 @@
+'use client'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from 'react-hook-form';
@@ -12,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Loader2, RefreshCcw } from 'lucide-react';
 import MessageCard from './../../../components/ui/ui/messageCard';
+import { Switch } from '@/components/ui/switch';
 
 const page = () => {
 
@@ -20,6 +22,7 @@ const page = () => {
   const [isSwitchLoading , SetIsswitchLoading] = useState(false);
   
   const session = useSession()
+  
   const {toast} = useToast();
 
   const handleDelete = async(messageId :string)=>{
@@ -36,7 +39,7 @@ const page = () => {
   const fetchAcceptMessages = useCallback(async () => {
     SetIsswitchLoading(true);
     try {
-      const response = await axios.get<Apires>('/api/accept-message');
+      const response = await axios.get<Apires>('/api/accept-message'  );
       setValue('acceptMessages', response.data.isAcceptingMessage);
     } catch (error) {
       const axiosError = error as AxiosError<Apires>;
@@ -57,6 +60,7 @@ const page = () => {
       SetIsswitchLoading(false);
       try {
         const response = await axios.get<Apires>('/api/get-messages');
+       
         setMessage(response.data.message || []);
         if (refresh) {
           toast({
@@ -84,11 +88,11 @@ const page = () => {
   // Fetch initial state from the server
 
 
-
+   
 
 
   useEffect(() => {
-    if (!useSession || !session.user) return;
+    if (!useSession || !session.data) return;
 
     fetchMessages();
 
@@ -98,7 +102,7 @@ const page = () => {
      
   const handleSwitchChange = async () => {
     try {
-      const response = await axios.post<Apires>('/api/accept-messages', {
+      const response = await axios.post<Apires>('/api/accept-message', {
         acceptMessages: !acceptMessages,
       });
       setValue('acceptMessages', !acceptMessages);
@@ -118,10 +122,10 @@ const page = () => {
     }
   };
 
-  if (!session || !session.user) {
-    return <div></div>;
+  if (!session.data || !session.data.user) {
+    return <div>no useer</div>;
   }
-  const {username} = session.user as User
+  const {username} = session.data.user as User
 
   const baseUrl = `${window.location.protocol}//${window.location.host}`
 
@@ -136,6 +140,7 @@ const page = () => {
   }
 
   return (
+    <>
     <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
       <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
 
@@ -181,10 +186,12 @@ const page = () => {
       </Button>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         {message.length > 0 ? (
-          message.map((messag, index) => (
+          message.map((message, index) => (
             <MessageCard
               key={message._id}
-              message={message}
+              id={message._id}
+              message={message.content}
+              date={message.createdAt}
               onMessageDelete={handleDelete}
             />
           ))
@@ -193,6 +200,7 @@ const page = () => {
         )}
       </div>
     </div>
+    </>
   )
 }
 

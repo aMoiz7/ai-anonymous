@@ -109,6 +109,9 @@ const SignInPage = () => {
             </Button>
           </form>
         </Form>
+        <p>Not a member yet ? 
+          <a  href="/sign-up" className='pl-2 font-semibold text-blue-600 hover:underline'>Sign up</a>
+        </p>
       </div>
     </div>
   );

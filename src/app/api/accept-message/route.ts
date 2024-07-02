@@ -1,16 +1,17 @@
-import { getServerSession } from "next-auth";
-
-import { authOptions } from "@/app/auth/[...nextauth]/options";
-
+import { getServerSession } from "next-auth/next"
 import { dbconnect } from "@/lib/dbConnect";
 import { UserModel } from "@/models/User";
 import { User } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/options";
 
 export async function POST(req : Request){
     await dbconnect();
 
     const session = await getServerSession(authOptions);
+    
     const user = session?.user  as User
+    
+    console.log(session?.user , "ses")
 
     if(!session|| !session.user){
        return Response.json({
@@ -24,12 +25,24 @@ export async function POST(req : Request){
 
     const userid = user._id 
 
-   const {acceptingMessage} =  await  req.json()
-
+   
    try { 
 
+    const checkstatus  = await  UserModel.findById(user._id)
+
+    if(!checkstatus){
+        return Response.json({
+            success:false,
+            message : "failed to update user status to accept message"
+           },{
+            status:401
+           })
+    }
+
+    const status = checkstatus.isAcceptingMessage
+
     const updatedUSer =  await UserModel.findByIdAndUpdate(userid , {
-        isAcceptingMessage : acceptingMessage
+        isAcceptingMessage : !status
      } , 
     {
         new:true
@@ -72,6 +85,7 @@ export async function GET(req:Request){
   await dbconnect();
 
   const session = await getServerSession(authOptions);
+ 
   const user = session?.user  as User
 
   if(!session|| !session.user){
@@ -107,7 +121,7 @@ export async function GET(req:Request){
        status:200
       })
  } catch (error) {
-    console.log("error is getting message acceptanc")
+    console.log("error is getting message acceptancE")
     return Response.json({
         success:false,
         message : "error is getting message acceptance "

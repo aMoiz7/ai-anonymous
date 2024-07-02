@@ -1,13 +1,14 @@
-import { sendVerificationEmail } from "@/helpers/sendVemail";
+import { sendVerificationEmail } from "@/helpers/sendVemail"; 
 import { dbconnect } from "@/lib/dbConnect";
 import { UserModel } from "@/models/User";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 // Connect to the database
-await dbconnect();
+
 
 export async function POST(request: NextRequest) {
+    await dbconnect();
     try {
         const { username, email, password } = await request.json();
 
@@ -26,7 +27,7 @@ export async function POST(request: NextRequest) {
 
         const existingUserByEmail = await UserModel.findOne({ email });
 
-        const verifyCode = Math.floor(10000 + Math.random() * 900000).toString();
+        const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
 
         if (existingUserByEmail) {
             if (existingUserByEmail.isVerified) {
@@ -56,11 +57,11 @@ export async function POST(request: NextRequest) {
             await newUser.save();
         }
 
-        const emailRes = await sendVerificationEmail({
+        const emailRes = await sendVerificationEmail(
             email,
-            username,
-            verifyCode,
-        });
+          username,
+        verifyCode
+        );
 
         if (!emailRes.success) {
             return NextResponse.json({ success: false, message: emailRes.message }, { status: 500 });

@@ -7,9 +7,11 @@ export async function POST(req:Request) {
     await dbconnect()
 
    const {username , content}= await req.json()
+   
 
    try {
     const user = await UserModel.findOne({username})
+    console.log(user , "message")
 
     if(!user){
         return Response.json({
@@ -26,7 +28,8 @@ export async function POST(req:Request) {
     }
       
     const newMessage ={content , createdAt: new Date()}
-    user.messages.push(newMessage) as Message
+    user.message.push(newMessage) as Message
+
      await user.save()
 
   

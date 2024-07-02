@@ -20,7 +20,7 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 
-import { X } from "lucide-react";
+import { Trash2, X } from "lucide-react";
 import { Button } from "../button";
 
 import { Message } from "@/models/User";
@@ -29,30 +29,35 @@ import axios from "axios";
 import { Apires } from "@/types/Apires";
 
 type  MessageCard={
-    message: Message;
+     id:string,
+     date:date
+    message: string;
     onMessageDelete:(messageId:string)=>void
 }
   
-const messageCard = ({message , onMessageDelete}:MessageCard) => {
+const messageCard = ({id,message ,date , onMessageDelete}:MessageCard) => {
 
     const {toast} =useToast()
 
     const  handleDelete= async()=>{
-     const res = await  axios.delete<Apires>('/api/delete-message/${message._id}')
+     const res = await  axios.delete<Apires>(`/api/delete-message/${id}`)
          toast({
             title:res.data.message,
     })
-    onMessageDelete(message._id)
+    onMessageDelete(id)
     }
   
+   const on = new Date(date)
+    
       return (
     <div>
       <Card>
         <CardHeader>
-          <CardTitle>Card Title</CardTitle>
+          <CardTitle>{message}</CardTitle>
+          <CardDescription>{on.toLocaleString()}</CardDescription>
           <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline"><X className="w-5 h-5"/></Button>
+      <AlertDialogTrigger asChild className="w-16 mt-6 align-middle">
+        <Button  className="bg-red-700"><Trash2 className=" text-xl text-white" /></Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -68,7 +73,7 @@ const messageCard = ({message , onMessageDelete}:MessageCard) => {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-          <CardDescription>Card Description</CardDescription>
+         
         </CardHeader>
         <CardContent>
         </CardContent>

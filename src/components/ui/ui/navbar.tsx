@@ -3,7 +3,8 @@ import { useSession , signOut } from 'next-auth/react'
 import Link from 'next/link'
 import React from 'react'
 import {User} from 'next-auth'
-import { Button } from '@react-email/components'
+import { Button } from '@/components/ui/button';
+
 
 const navbar = () => {
 
@@ -12,8 +13,8 @@ const navbar = () => {
   return (
     
    <nav className='p-4 , md:p-6 shadow-md'>
-    <div className='container mx-suto flex flex-col md:flex-row justify-between items-center'>
-        <a className='text-xl font-bold mb-4 md:mb-0' href='#'> Mystry Message</a>
+    <div className='container mx-auto flex flex-col md:flex-row justify-between items-start'>
+        <a className='text-2xl font-bold h-6 font-serif mb-4 md:mb-0' href='#'> Anonmous Conversation</a>
         {
             session?(
                 <>
@@ -22,9 +23,10 @@ const navbar = () => {
                 <Button className='w-full md:w-auto' onClick={()=>signOut()}>logout</Button>
                 </>
             ):(
-                 <Link href='/sign-in'>
-                    <Button className='w-full md:w-auto'>Login</Button>
-                 </Link>
+                 <Link href={'/sign-in'}>
+                    <Button className="w-32 text-xl"  >LogIn</Button>
+                    </Link>
+                 
             )
         }
     </div>

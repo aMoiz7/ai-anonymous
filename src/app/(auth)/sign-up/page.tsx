@@ -149,10 +149,13 @@ const page = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={issubmiting}>{issubmiting?(<> <Loader2 className="mr-2 h-4 w-4 animate-spin"/> Please wait</>):('Signup')}</Button>
+        <Button type="submit" disabled={issubmiting}>{issubmiting?(<> <Loader2 className="mr-2 h-4 w-4 animate-spin"/> Please wait</>):('Sign up')}</Button>
            </form>
 
         </Form>
+        <p>Not a member yet ? 
+          <a  href="/sign-in" className='pl-2 font-semibold text-blue-600 hover:underline'>Sign In</a>
+        </p>
 
       </div>
       
