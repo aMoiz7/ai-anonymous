@@ -139,7 +139,7 @@ const parseStringMessages = (messageString: string): string[] => {
           click on any message bellow to select it.
         </span>
         <div className="  border-gray-300 rounded-lg border-4 
-        h-44 ">
+        h-44 md:border-white">
         
         {
           isLoading?<Skeleton className=" ml-8 w-2/3 h-24 mt-6  rounded-m" />
