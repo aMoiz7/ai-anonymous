@@ -144,8 +144,8 @@ const parseStringMessages = (messageString: string): string[] => {
         {
           isLoading?<Skeleton className=" ml-8 w-2/3 h-24 mt-6  rounded-m" />
           :
-          parseStringMessages(completion).map((question, index)=>(
-          <button className="border-2 rounded-m mt-4 ml-12 before:m-2 w-11/12" onClick={() => handleClick(question)} >
+          parseStringMessages(completion).map((question ,i)=>(
+          <button className="border-2 rounded-m mt-4 ml-12  w-11/12   " key={i} onClick={() => handleClick(question)} >
            {question}
           </button>
         ))
